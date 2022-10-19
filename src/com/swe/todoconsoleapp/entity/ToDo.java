@@ -9,6 +9,33 @@ public class ToDo implements Serializable {
     private Date startDate;
     private Date endDate;
 
+    private Priority priority;
+    private Category category;
+
+    public ToDo(String title, String description, Date startDate, Date endDate, Priority priority, Category category) {
+        this.title = title;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.priority = priority;
+        this.category = category;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public String getDescription() {
         return description;
