@@ -1,26 +1,24 @@
 package com.swe.todoconsoleapp;
 
-import com.swe.todoconsoleapp.entity.ToDo;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.swe.todoconsoleapp.exception.ToDoNotFoundException;
+import com.swe.todoconsoleapp.service.ToDoService;
+import com.swe.todoconsoleapp.utils.MenuPrinter;
 
 public class Main {
+
+    private static final ToDoService toDoService = new ToDoService();
+
     public static void main(String[] args) throws Exception {
 
-        var toDo = new ToDo();
-        toDo.setTitle("hahha");
-        var fos = new FileOutputStream("t.txt");
-        var oos = new ObjectOutputStream(fos);
-        oos.writeObject(toDo);
-        oos.close();
-        var fis = new FileInputStream("t.txt");
-        var ois = new ObjectInputStream(fis);
-        var result = (ToDo) ois.readObject();
-        System.out.println(result.getTitle());
 
-        ois.close();
+        try {
+            var selectedTitle = MenuPrinter.printFindByTitleMenu();
+            var selectedTodo = toDoService.findAllByTitle(selectedTitle);
+            MenuPrinter.printFindByTitleResult(selectedTodo);
+        } catch (ToDoNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 }
