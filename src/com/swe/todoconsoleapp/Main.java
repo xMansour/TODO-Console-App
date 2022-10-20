@@ -10,8 +10,14 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.swe.todoconsoleapp.exception.ToDoNotFoundException;
+import com.swe.todoconsoleapp.service.ToDoService;
+import com.swe.todoconsoleapp.utils.MenuPrinter;
 
 public class Main {
+
+    private static final ToDoService toDoService = new ToDoService();
+
     public static void main(String[] args) throws Exception{
         ToDoService toDoService = new ToDoService();
 
@@ -19,6 +25,14 @@ public class Main {
         toDo1.setTitle("todo1");
         toDoService.writeToDo(toDo1);
 
+
+        try {
+            var selectedTitle = MenuPrinter.printFindByTitleMenu();
+            var selectedTodo = toDoService.findAllByTitle(selectedTitle);
+            MenuPrinter.printFindByTitleResult(selectedTodo);
+        } catch (ToDoNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         var todo2 = new ToDo();
         todo2.setTitle("todo2");
         toDoService.writeToDo(todo2);
