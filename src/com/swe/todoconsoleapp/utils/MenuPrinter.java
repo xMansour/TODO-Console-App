@@ -9,8 +9,7 @@ public class MenuPrinter {
     public static String printFindByMenu(String criteria) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter todo " + criteria + ": ");
-        String selectedCriteria = scanner.nextLine();
-        return selectedCriteria;
+        return scanner.nextLine();
     }
 
     public static void printToDo(ToDo toDo) {
@@ -24,10 +23,12 @@ public class MenuPrinter {
     }
 
     public static void PrintToDos(List<ToDo> toDos) {
-        for (var toDo : toDos
-        ) {
-            printToDo(toDo);
-        }
+        if (toDos.size() == 0)
+            System.out.println("No toDos found");
+        else
+            for (var toDo : toDos
+            ) {
+                printToDo(toDo);
+            }
     }
-
 }

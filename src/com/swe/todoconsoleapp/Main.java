@@ -1,6 +1,7 @@
 package com.swe.todoconsoleapp;
 
 import com.swe.todoconsoleapp.entity.Criteria;
+import com.swe.todoconsoleapp.exception.PriorityNotFoundException;
 import com.swe.todoconsoleapp.exception.ToDoNotFoundException;
 import com.swe.todoconsoleapp.service.ToDoService;
 import com.swe.todoconsoleapp.utils.MenuPrinter;
@@ -19,8 +20,14 @@ public class Main {
         }
 
         var selectedPriority = MenuPrinter.printFindByMenu(Criteria.PRIORITY.name());
-        var selectedToDos = toDoService.findByPriority(selectedPriority.toUpperCase());
-        MenuPrinter.PrintToDos(selectedToDos);
+
+        try {
+            var selectedToDos = toDoService.findByPriority(selectedPriority.toUpperCase());
+            MenuPrinter.PrintToDos(selectedToDos);
+        } catch (PriorityNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 }
