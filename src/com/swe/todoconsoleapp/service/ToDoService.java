@@ -31,7 +31,7 @@ public class ToDoService {
         if (toDos.size() > 0)
             for (var toDo : toDos
             ) {
-                if (toDo.getPriority().name().equals(priority))
+                if (toDo.getCategory() != null && toDo.getPriority().name().equals(priority))
                     result.add(toDo);
             }
         return result;

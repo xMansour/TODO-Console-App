@@ -17,8 +17,15 @@ public class MenuPrinter {
         System.out.println("description: " + toDo.getTitle());
         System.out.println("start date: " + toDo.getStartDate());
         System.out.println("end date: " + toDo.getEndDate());
-        System.out.println("priority: " + toDo.getPriority().name());
-        System.out.println("category: " + toDo.getCategory().name());
+
+        if (toDo.getCategory() != null) {
+            System.out.println("priority: " + toDo.getPriority().name());
+            System.out.println("category: " + toDo.getCategory().name());
+        } else {
+            System.out.println("priority: Not assigned yet");
+            System.out.println("category: Not assigned yet");
+        }
+
         System.out.println("--------");
     }
 
