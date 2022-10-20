@@ -28,11 +28,12 @@ public class ToDoService {
         if (!InputValidator.isValidPriority(priority))
             throw new PriorityNotFoundException("Invalid Priority please select from(High,Medium,Low)");
 
-        for (var toDo : toDos
-        ) {
-            if (toDo.getPriority().name().equals(priority))
-                result.add(toDo);
-        }
+        if (toDos.size() > 0)
+            for (var toDo : toDos
+            ) {
+                if (toDo.getPriority().name().equals(priority))
+                    result.add(toDo);
+            }
         return result;
     }
 
