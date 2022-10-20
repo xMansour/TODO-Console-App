@@ -21,6 +21,10 @@ public class ToDo implements Serializable {
         this.category = category;
     }
 
+
+    public ToDo() {
+    }
+
     public Priority getPriority() {
         return priority;
     }
