@@ -60,23 +60,86 @@ public class ToDoService {
     }
 
     public List<ToDo> selectAllToDos() {
-        try (FileInputStream fileInputStream = new FileInputStream("todos"); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-            return (List<ToDo>) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        createFileIfNotExists();
+        if (!isEmptyFile()){
+            try (FileInputStream fileInputStream = new FileInputStream("todos");
+                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+                return (List<ToDo>) objectInputStream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+
         return null;
     }
 
-    public void writeToDo(ToDo todo) {
+    public void createToDo(ToDo todo) {
         List<ToDo> todos = selectAllToDos();
-        try (FileOutputStream fileOutputStream = new FileOutputStream("todos"); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-            if (todos == null) todos = new ArrayList<>();
-            todos.add(todo);
+        if (todos == null)
+            todos = new ArrayList<>();
+        todos.add(todo);
+        saveToDos(todos);
+    }
+
+    public void updateToDo(ToDo todo) {
+        List<ToDo> todos = selectAllToDos();
+        for (int i = 0; i < todos.size(); i++) {
+            if (todos.get(i).getTitle().equals(todo.getTitle())) {
+                todos.get(i).setTitle(todo.getTitle());
+                todos.get(i).setCategory(todo.getCategory());
+                todos.get(i).setDescription(todo.getDescription());
+                todos.get(i).setPriority(todo.getPriority());
+                todos.get(i).setStartDate(todo.getStartDate());
+                todos.get(i).setEndDate(todo.getEndDate());
+            }
+            saveToDos(todos);
+
+        }
+
+
+    }
+
+    public void deleteToDo(String title) {
+        List<ToDo> todos = selectAllToDos();
+        for (int i = 0; i < todos.size(); i++) {
+            if (todos.get(i).getTitle().equals(title)) {
+                todos.remove(todos.get(i));
+            }
+            saveToDos(todos);
+        }
+    }
+
+    private void saveToDos(List<ToDo> todos) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("todos");
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
             objectOutputStream.writeObject(todos);
             objectOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
+
+    private void createFileIfNotExists() {
+        File todosFile = new File("todos");
+        if (!todosFile.exists()) {
+            try {
+                todosFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private boolean isEmptyFile() {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("todos"))) {
+            if (bufferedReader.readLine() == null) {
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

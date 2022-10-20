@@ -46,35 +46,6 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        var todo2 = new ToDo();
-        todo2.setTitle("todo2");
-        toDoService.writeToDo(todo2);
-
-        var todo3 = new ToDo();
-        todo3.setTitle("todo3");
-        toDoService.writeToDo(todo3);
-
-
-        List<ToDo> todos = toDoService.selectAllToDos();
-        todos.forEach(todo -> {
-            System.out.println(todo.getTitle());
-        });
-
-
-        /*FileOutputStream fileOutputStream = new FileOutputStream("x");
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        List<ToDo> list = new ArrayList<>();
-        list.add(new ToDo());
-        list.add(new ToDo());
-        list.add(new ToDo());
-        objectOutputStream.writeObject(list);
-
-        FileInputStream fileInputStream = new FileInputStream("x");
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        List<ToDo> todos = (List<ToDo>)objectInputStream.readObject();
-        todos.forEach(todo ->{
-            System.out.println(todo.getTitle());
-        });*/
     }
 
 }
