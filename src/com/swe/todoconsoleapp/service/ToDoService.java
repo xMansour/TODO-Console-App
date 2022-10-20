@@ -52,4 +52,9 @@ public class ToDoService implements ToDoRepository {
         }
         return result;
     }
+
+    public List<ToDo> findByStartDate(Date startDate)
+    {
+
+    }
 }
