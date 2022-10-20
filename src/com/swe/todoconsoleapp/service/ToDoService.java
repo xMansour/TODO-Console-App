@@ -6,8 +6,8 @@ import com.swe.todoconsoleapp.entity.ToDo;
 import com.swe.todoconsoleapp.exception.PriorityNotFoundException;
 import com.swe.todoconsoleapp.exception.ToDoNotFoundException;
 import com.swe.todoconsoleapp.repository.ToDoRepository;
-import com.swe.todoconsoleapp.utils.InputValidator;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,5 +56,29 @@ public class ToDoService implements ToDoRepository {
     public List<ToDo> findByStartDate(Date startDate)
     {
 
+    }
+
+    public List<ToDo> selectAllToDos() {
+        try (FileInputStream fileInputStream = new FileInputStream("todos");
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+            return (List<ToDo>) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void writeToDo(ToDo todo) {
+        List<ToDo> todos = selectAllToDos();
+        try (FileOutputStream fileOutputStream = new FileOutputStream("todos");
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+            if (todos == null)
+                todos = new ArrayList<>();
+            todos.add(todo);
+            objectOutputStream.writeObject(todos);
+            objectOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
