@@ -1,27 +1,18 @@
 package com.swe.todoconsoleapp.service;
 
-import com.swe.todoconsoleapp.entity.Category;
-import com.swe.todoconsoleapp.entity.Priority;
 import com.swe.todoconsoleapp.entity.ToDo;
 import com.swe.todoconsoleapp.exception.PriorityNotFoundException;
 import com.swe.todoconsoleapp.exception.ToDoNotFoundException;
-import com.swe.todoconsoleapp.repository.ToDoRepository;
+import com.swe.todoconsoleapp.utils.InputValidator;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ToDoService implements ToDoRepository {
+public class ToDoService {
     public ToDo findByTitle(String title) throws ToDoNotFoundException {
-        List<ToDo> toDos = new ArrayList<>();
-        var toDo = new ToDo("x", "testt", new Date(), new Date(), Priority.HIGH, Category.Hobby);
-        var toDo2 = new ToDo("y", "testt", new Date(), new Date(), Priority.HIGH, Category.Hobby);
-        var toDo3 = new ToDo("z", "testt", new Date(), new Date(), Priority.HIGH, Category.Hobby);
-
-        toDos.add(toDo2);
-        toDos.add(toDo);
-        toDos.add(toDo3);
+        List<ToDo> toDos = selectAllToDos();
 
         for (var item : toDos
         ) {
@@ -32,16 +23,8 @@ public class ToDoService implements ToDoRepository {
     }
 
     public List<ToDo> findByPriority(String priority) throws PriorityNotFoundException {
-        List<ToDo> toDos = new ArrayList<>();
+        List<ToDo> toDos = selectAllToDos();
         List<ToDo> result = new ArrayList<>();
-        var toDo1 = new ToDo("x", "testt", new Date(), new Date(), Priority.HIGH, Category.Hobby);
-        var toDo2 = new ToDo("y", "testt", new Date(), new Date(), Priority.HIGH, Category.Hobby);
-        var toDo3 = new ToDo("z", "testt", new Date(), new Date(), Priority.HIGH, Category.Hobby);
-
-        toDos.add(toDo2);
-        toDos.add(toDo1);
-        toDos.add(toDo3);
-
         if (!InputValidator.isValidPriority(priority))
             throw new PriorityNotFoundException("Invalid Priority please select from(High,Medium,Low)");
 
@@ -53,9 +36,8 @@ public class ToDoService implements ToDoRepository {
         return result;
     }
 
-    public List<ToDo> findByStartDate(Date startDate)
-    {
-
+    public List<ToDo> findByStartDate(Date startDate) {
+        return null;
     }
 
     public List<ToDo> selectAllToDos() {
