@@ -10,6 +10,8 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ToDoService {
@@ -61,7 +63,7 @@ public class ToDoService {
 
     public List<ToDo> selectAllToDos() {
         createFileIfNotExists();
-        if (!isEmptyFile()){
+        if (!isEmptyFile()) {
             try (FileInputStream fileInputStream = new FileInputStream("todos");
                  ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
                 return (List<ToDo>) objectInputStream.readObject();
@@ -141,5 +143,28 @@ public class ToDoService {
         }
         return false;
     }
+
+    public List<ToDo> selectTopFiveNearestByStartDate() {
+        List<ToDo> unSortedToDos = selectAllToDos();
+
+        Collections.sort(unSortedToDos, new Comparator<ToDo>() {
+            @Override
+            public int compare(ToDo toDo1, ToDo toDo2) {
+                return (toDo1.getStartDate().compareTo(toDo2.getStartDate()));
+            }
+        });
+
+        List<ToDo> sortedToDos = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            sortedToDos.set(i, unSortedToDos.get(i));
+
+
+        }
+        return sortedToDos;
+
+
+    }
+
+
 
 }
