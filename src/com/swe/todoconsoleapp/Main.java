@@ -29,14 +29,14 @@ public class Main {
         }
 
         try {
-            var selectedStartDate = MenuPrinter.printFindByMenu(Criteria.STARTDATE.name());
+            var selectedStartDate = MenuPrinter.printFindByMenu(Criteria.START_DATE.name());
             var selectedToDos = toDoService.findByDate(0, selectedStartDate);
             MenuPrinter.printResults(selectedToDos);
         } catch (InvalidDateFormatException e) {
             System.out.println(e.getMessage());
         }
         try {
-            var selectedEndDate = MenuPrinter.printFindByMenu(Criteria.ENDDATE.name());
+            var selectedEndDate = MenuPrinter.printFindByMenu(Criteria.END_DATE.name());
             var selectedToDos = toDoService.findByDate(1, selectedEndDate);
             MenuPrinter.printResults(selectedToDos);
         } catch (InvalidDateFormatException e) {
