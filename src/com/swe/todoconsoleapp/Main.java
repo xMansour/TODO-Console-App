@@ -1,14 +1,11 @@
 package com.swe.todoconsoleapp;
 
 import com.swe.todoconsoleapp.entity.Criteria;
-import com.swe.todoconsoleapp.entity.ToDo;
 import com.swe.todoconsoleapp.exception.InvalidDateFormatException;
 import com.swe.todoconsoleapp.exception.PriorityNotFoundException;
 import com.swe.todoconsoleapp.exception.ToDoNotFoundException;
 import com.swe.todoconsoleapp.service.ToDoService;
 import com.swe.todoconsoleapp.utils.MenuPrinter;
-
-import java.util.List;
 
 public class Main {
 
@@ -18,7 +15,7 @@ public class Main {
         try {
             var selectedTitle = MenuPrinter.printFindByMenu(Criteria.TITLE.name());
             var selectedTodo = toDoService.findByTitle(selectedTitle);
-            MenuPrinter.printToDo(selectedTodo);
+            MenuPrinter.printResults(selectedTodo);
         } catch (ToDoNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -26,7 +23,7 @@ public class Main {
         try {
             var selectedPriority = MenuPrinter.printFindByMenu(Criteria.PRIORITY.name());
             var selectedToDos = toDoService.findByPriority(selectedPriority.toUpperCase());
-            MenuPrinter.PrintToDos(selectedToDos);
+            MenuPrinter.printResults(selectedToDos);
         } catch (PriorityNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -34,14 +31,14 @@ public class Main {
         try {
             var selectedStartDate = MenuPrinter.printFindByMenu(Criteria.STARTDATE.name());
             var selectedToDos = toDoService.findByDate(0, selectedStartDate);
-            MenuPrinter.PrintToDos(selectedToDos);
+            MenuPrinter.printResults(selectedToDos);
         } catch (InvalidDateFormatException e) {
             System.out.println(e.getMessage());
         }
         try {
             var selectedEndDate = MenuPrinter.printFindByMenu(Criteria.ENDDATE.name());
             var selectedToDos = toDoService.findByDate(1, selectedEndDate);
-            MenuPrinter.PrintToDos(selectedToDos);
+            MenuPrinter.printResults(selectedToDos);
         } catch (InvalidDateFormatException e) {
             System.out.println(e.getMessage());
         }

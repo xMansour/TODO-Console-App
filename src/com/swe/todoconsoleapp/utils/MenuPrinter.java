@@ -12,7 +12,7 @@ public class MenuPrinter {
         return scanner.nextLine();
     }
 
-    public static void printToDo(ToDo toDo) {
+    public static void printResults(ToDo toDo) {
         System.out.println("title: " + toDo.getTitle());
         System.out.println("description: " + toDo.getTitle());
         System.out.println("start date: " + toDo.getStartDate());
@@ -29,13 +29,13 @@ public class MenuPrinter {
         System.out.println("--------");
     }
 
-    public static void PrintToDos(List<ToDo> toDos) {
+    public static void printResults(List<ToDo> toDos) {
         if (toDos.size() == 0)
             System.out.println("No toDos found");
         else
             for (var toDo : toDos
             ) {
-                printToDo(toDo);
+                printResults(toDo);
             }
     }
 

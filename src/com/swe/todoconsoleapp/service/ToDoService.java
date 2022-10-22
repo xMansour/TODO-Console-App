@@ -18,9 +18,10 @@ public class ToDoService {
     public ToDo findByTitle(String title) throws ToDoNotFoundException {
         List<ToDo> toDos = selectAllToDos();
 
-        for (var item : toDos) {
-            if (item.getTitle().equals(title)) return item;
-        }
+        if (toDos != null)
+            for (var item : toDos) {
+                if (item.getTitle().equals(title)) return item;
+            }
         throw new ToDoNotFoundException("No ToDo found with the selected title: " + title);
     }
 
@@ -30,7 +31,7 @@ public class ToDoService {
         if (!InputValidator.isValidPriority(priority))
             throw new PriorityNotFoundException("Invalid Priority please select from(High,Medium,Low)");
 
-        if (toDos.size() > 0) for (var toDo : toDos) {
+        if (toDos != null) for (var toDo : toDos) {
             if (toDo.getCategory() != null && toDo.getPriority().name().equals(priority)) result.add(toDo);
         }
         return result;
@@ -45,12 +46,12 @@ public class ToDoService {
         try {
             var selectedDate = simpleDateFormat.parse(date);
             if (mode == 0) {
-                if (toDos.size() > 0) for (var toDo : toDos) {
+                if (toDos != null) for (var toDo : toDos) {
                     if (toDo.getStartDate() != null && toDo.getStartDate().equals(selectedDate))
                         result.add(toDo);
                 }
             } else {
-                if (toDos.size() > 0) for (var toDo : toDos) {
+                if (toDos != null) for (var toDo : toDos) {
                     if (toDo.getEndDate() != null && toDo.getEndDate().equals(selectedDate))
                         result.add(toDo);
                 }
@@ -164,7 +165,6 @@ public class ToDoService {
 
 
     }
-
 
 
 }
