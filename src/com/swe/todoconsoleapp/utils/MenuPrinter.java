@@ -1,7 +1,10 @@
 package com.swe.todoconsoleapp.utils;
 
+import com.swe.todoconsoleapp.entity.Category;
+import com.swe.todoconsoleapp.entity.Priority;
 import com.swe.todoconsoleapp.entity.ToDo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -62,4 +65,40 @@ public class MenuPrinter {
         scanner.nextLine();
         printMainMenu();
     }
+
+    public static ToDo createToDoMenu() {
+        System.out.println("==========");
+        System.out.print("Please Enter ToDO's Title: ");
+        String title = scanner.nextLine();
+        System.out.println();
+
+        System.out.print("Please Enter ToDO's Description: ");
+        String description = scanner.nextLine();
+        System.out.println();
+
+        System.out.print("Please Enter ToDO's Start Date: ");
+        Date startDate = Helpers.getDate(scanner.nextLine());
+        System.out.println();
+
+        System.out.print("Please Enter ToDO's End Date: ");
+        Date endDate = Helpers.getDate(scanner.nextLine());
+        System.out.println();
+
+        System.out.print("Please Enter ToDO's Priority: ");
+        String priority = scanner.nextLine();
+        if (InputValidator.isValidPriority(priority))
+            System.out.println(
+
+            );
+        System.out.println();
+
+        System.out.print("Please Enter ToDO's Category: ");
+        String category = scanner.nextLine();
+        System.out.println();
+
+        return new ToDo(title, description, startDate, endDate, Priority.valueOf(priority.toUpperCase()), Category.valueOf(category.toUpperCase()));
+
+    }
+
+
 }

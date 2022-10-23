@@ -1,6 +1,7 @@
 package com.swe.todoconsoleapp;
 
 import com.swe.todoconsoleapp.entity.Criteria;
+import com.swe.todoconsoleapp.entity.ToDo;
 import com.swe.todoconsoleapp.exception.InvalidDateFormatException;
 import com.swe.todoconsoleapp.exception.PriorityNotFoundException;
 import com.swe.todoconsoleapp.exception.ToDoNotFoundException;
@@ -12,16 +13,25 @@ public class Main {
     private static final ToDoService toDoService = new ToDoService();
 
     public static void main(String[] args) {
-
         var result = MenuPrinter.printMainMenu();
         switch (result) {
-            case 1: // Create
+            case 1:
+                ToDo todo = MenuPrinter.createToDoMenu();
+                toDoService.createToDo(todo);
+                MenuPrinter.resetMenu();
                 break;
-            case 2: // Update
+            case 2:
+                ToDo toDo = MenuPrinter.createToDoMenu();
+                toDoService.updateToDo(toDo);
                 break;
-            case 3: // Delete
+            case 3:
+                String deletedToDoTitle = MenuPrinter.printFindByMenu(Criteria.TITLE.name());
+                toDoService.deleteToDo(deletedToDoTitle);
+                MenuPrinter.resetMenu();
                 break;
-            case 4: // Show All
+            case 4:
+                MenuPrinter.printResults(toDoService.selectAllToDos());
+                MenuPrinter.printMainMenu();
                 break;
             case 5: // Show Top 5
                 break;
@@ -82,6 +92,6 @@ public class Main {
                 System.exit(0);
                 break;
         }
-    }
 
+    }
 }
