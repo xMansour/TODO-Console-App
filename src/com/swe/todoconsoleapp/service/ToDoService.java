@@ -61,7 +61,7 @@ public class ToDoService {
 
     public List<ToDo> selectAllToDos() {
         createFileIfNotExists();
-        if (!isEmptyFile()){
+        if (!isEmptyFile()) {
             try (FileInputStream fileInputStream = new FileInputStream("todos");
                  ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
                 return (List<ToDo>) objectInputStream.readObject();
@@ -75,38 +75,61 @@ public class ToDoService {
 
     public void createToDo(ToDo todo) {
         List<ToDo> todos = selectAllToDos();
+
+        //if it is the first time to add a to-do
         if (todos == null)
             todos = new ArrayList<>();
-        todos.add(todo);
+
+        //to check if the to-do already exists
+        boolean found = false;
+        for (ToDo currentToDO : todos) {
+            if (currentToDO.getTitle().equals(todo.getTitle())) {
+                found = true;
+                break;
+            }
+        }
+        //if the to-do doesn't exist, add it
+        if (!found)
+            todos.add(todo);
         saveToDos(todos);
     }
 
-    public void updateToDo(ToDo todo) {
+    public boolean updateToDo(ToDo todo) {
         List<ToDo> todos = selectAllToDos();
-        for (int i = 0; i < todos.size(); i++) {
-            if (todos.get(i).getTitle().equals(todo.getTitle())) {
-                todos.get(i).setTitle(todo.getTitle());
-                todos.get(i).setCategory(todo.getCategory());
-                todos.get(i).setDescription(todo.getDescription());
-                todos.get(i).setPriority(todo.getPriority());
-                todos.get(i).setStartDate(todo.getStartDate());
-                todos.get(i).setEndDate(todo.getEndDate());
+        boolean updated = false;
+        //loop and check if the to-do exists, update it
+        for (ToDo currentToDo : todos) {
+            if (currentToDo.getTitle().equals(todo.getTitle())) {
+                currentToDo.setTitle(todo.getTitle());
+                currentToDo.setCategory(todo.getCategory());
+                currentToDo.setDescription(todo.getDescription());
+                currentToDo.setPriority(todo.getPriority());
+                currentToDo.setStartDate(todo.getStartDate());
+                currentToDo.setEndDate(todo.getEndDate());
+                updated = true;
+                break;
             }
-            saveToDos(todos);
-
         }
-
+        saveToDos(todos);
+        return updated;
 
     }
 
-    public void deleteToDo(String title) {
+    public boolean deleteToDo(String title) {
         List<ToDo> todos = selectAllToDos();
-        for (int i = 0; i < todos.size(); i++) {
-            if (todos.get(i).getTitle().equals(title)) {
-                todos.remove(todos.get(i));
+        boolean deleted = false;
+        //todos.removeIf(currentToDo -> currentToDo.getTitle().equals(title));  //Collections.removeIf -> Amazing
+
+        //to check if the to-do exists, remove it
+        for (ToDo currentToDo: todos){
+            if (currentToDo.getTitle().equals(title)){
+                todos.remove(currentToDo);
+                deleted = true;
+                break;
             }
-            saveToDos(todos);
         }
+        saveToDos(todos);
+        return deleted;
     }
 
     private void saveToDos(List<ToDo> todos) {
