@@ -53,7 +53,8 @@ public class MenuPrinter {
     }
 
     public static void printResults(List<ToDo> toDos) {
-        if (toDos.size() == 0) System.out.println("No toDos found");
+
+        if (toDos == null || toDos.size() == 0) System.out.println("No toDos found");
         else for (var toDo : toDos) {
             printResults(toDo);
         }
@@ -63,7 +64,6 @@ public class MenuPrinter {
         System.out.println("==========");
         System.out.println("press ENTER to return to main menu");
         scanner.nextLine();
-        printMainMenu();
     }
 
     public static ToDo createToDoMenu() {
