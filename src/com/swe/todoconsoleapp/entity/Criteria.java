@@ -2,7 +2,7 @@ package com.swe.todoconsoleapp.entity;
 
 public enum Criteria {
     TITLE,
-    STARTDATE,
-    ENDDATE,
+    START_DATE,
+    END_DATE,
     PRIORITY
 }
