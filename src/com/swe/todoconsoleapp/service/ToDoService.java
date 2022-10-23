@@ -158,12 +158,8 @@ public class ToDoService {
         List<ToDo> sortedToDos = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             sortedToDos.set(i, unSortedToDos.get(i));
-
-
         }
         return sortedToDos;
-
-
     }
 
 
