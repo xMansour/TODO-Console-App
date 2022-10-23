@@ -6,8 +6,29 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MenuPrinter {
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static Integer printMainMenu() {
+        String input = "";
+        do {
+            System.out.println("Please select from menu:");
+            System.out.println("1- Create todo.");
+            System.out.println("2- Edit todo.");
+            System.out.println("3- Delete todo.");
+            System.out.println("4- Show all todos.");
+            System.out.println("5- Show top nearest 5 todos.");
+            System.out.println("6- Filter by title.");
+            System.out.println("7- Filter by start date.");
+            System.out.println("8- Filter by end date.");
+            System.out.println("9- Filter by priority.");
+            System.out.println("10- Exit");
+            input = scanner.nextLine();
+        } while (!InputValidator.isValidNumber(input, 1, 10));
+        return Integer.parseInt(input);
+    }
+
     public static String printFindByMenu(String criteria) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter todo " + criteria + ": ");
         return scanner.nextLine();
     }
@@ -25,22 +46,20 @@ public class MenuPrinter {
             System.out.println("priority: Not assigned yet");
             System.out.println("category: Not assigned yet");
         }
-
         System.out.println("--------");
     }
 
     public static void printResults(List<ToDo> toDos) {
-        if (toDos.size() == 0)
-            System.out.println("No toDos found");
-        else
-            for (var toDo : toDos
-            ) {
-                printResults(toDo);
-            }
+        if (toDos.size() == 0) System.out.println("No toDos found");
+        else for (var toDo : toDos) {
+            printResults(toDo);
+        }
     }
 
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+    public static void resetMenu() {
+        System.out.println("==========");
+        System.out.println("press ENTER to return to main menu");
+        scanner.nextLine();
+        printMainMenu();
     }
 }
