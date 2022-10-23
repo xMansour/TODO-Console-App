@@ -39,8 +39,8 @@ public class MenuPrinter {
     public static void printResults(ToDo toDo) {
         System.out.println("title: " + toDo.getTitle());
         System.out.println("description: " + toDo.getTitle());
-        System.out.println("start date: " + toDo.getStartDate());
-        System.out.println("end date: " + toDo.getEndDate());
+        System.out.println("start date: " + Helpers.covertDateToString(toDo.getStartDate()));
+        System.out.println("end date: " +  Helpers.covertDateToString(toDo.getEndDate()));
 
         if (toDo.getCategory() != null) {
             System.out.println("priority: " + toDo.getPriority().name());
@@ -77,11 +77,11 @@ public class MenuPrinter {
         System.out.println();
 
         System.out.print("Please Enter ToDO's Start Date: ");
-        Date startDate = Helpers.getDate(scanner.nextLine());
+        Date startDate = Helpers.covertStringToDate(scanner.nextLine());
         System.out.println();
 
         System.out.print("Please Enter ToDO's End Date: ");
-        Date endDate = Helpers.getDate(scanner.nextLine());
+        Date endDate = Helpers.covertStringToDate(scanner.nextLine());
         System.out.println();
 
         System.out.print("Please Enter ToDO's Priority: ");
