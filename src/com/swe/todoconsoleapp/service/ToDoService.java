@@ -4,11 +4,10 @@ import com.swe.todoconsoleapp.entity.ToDo;
 import com.swe.todoconsoleapp.exception.InvalidDateFormatException;
 import com.swe.todoconsoleapp.exception.PriorityNotFoundException;
 import com.swe.todoconsoleapp.exception.ToDoNotFoundException;
+import com.swe.todoconsoleapp.utils.Helpers;
 import com.swe.todoconsoleapp.utils.InputValidator;
 
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -40,27 +39,22 @@ public class ToDoService {
     }
 
     public List<ToDo> findByDate(int mode, String date) throws InvalidDateFormatException {
-
         var toDos = selectAllToDos();
         var result = new ArrayList<ToDo>();
-        var simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        try {
-            var selectedDate = simpleDateFormat.parse(date);
-            if (mode == SEARCH_BY_START_DATE) {
-                if (toDos != null) for (var toDo : toDos) {
-                    if (toDo.getStartDate() != null && toDo.getStartDate().equals(selectedDate))
-                        result.add(toDo);
-                }
-            } else {
-                if (toDos != null) for (var toDo : toDos) {
-                    if (toDo.getEndDate() != null && toDo.getEndDate().equals(selectedDate))
-                        result.add(toDo);
-                }
+        var selectedDate = Helpers.covertStringToDate(date);
+        if (mode == SEARCH_BY_START_DATE) {
+            if (toDos != null) for (var toDo : toDos) {
+                if (toDo.getStartDate() != null && toDo.getStartDate().equals(selectedDate))
+                    result.add(toDo);
             }
-        } catch (ParseException e) {
-            throw new InvalidDateFormatException("date format must follow dd/MM/yyy");
+        } else {
+            if (toDos != null) for (var toDo : toDos) {
+                if (toDo.getEndDate() != null && toDo.getEndDate().equals(selectedDate))
+                    result.add(toDo);
+            }
         }
+
         return result;
     }
 

@@ -3,6 +3,8 @@ package com.swe.todoconsoleapp.utils;
 import com.swe.todoconsoleapp.entity.Category;
 import com.swe.todoconsoleapp.entity.Priority;
 import com.swe.todoconsoleapp.entity.ToDo;
+import com.swe.todoconsoleapp.exception.InvalidDateFormatException;
+import com.swe.todoconsoleapp.exception.NoDateAssignedException;
 
 import java.util.Date;
 import java.util.List;
@@ -39,8 +41,18 @@ public class MenuPrinter {
     public static void printResults(ToDo toDo) {
         System.out.println("title: " + toDo.getTitle());
         System.out.println("description: " + toDo.getTitle());
-        System.out.println("start date: " + Helpers.covertDateToString(toDo.getStartDate()));
-        System.out.println("end date: " +  Helpers.covertDateToString(toDo.getEndDate()));
+        try {
+            System.out.println("start date: " + Helpers.covertDateToString(toDo.getEndDate()));
+
+        } catch (NoDateAssignedException ex) {
+            System.out.println("start date: " + ex.getMessage());
+
+        }
+        try {
+            System.out.println("end date: " + Helpers.covertDateToString(toDo.getStartDate()));
+        } catch (NoDateAssignedException ex) {
+            System.out.println("end date: " + ex.getMessage());
+        }
 
         if (toDo.getCategory() != null) {
             System.out.println("priority: " + toDo.getPriority().name());
@@ -77,19 +89,28 @@ public class MenuPrinter {
         System.out.println();
 
         System.out.print("Please Enter ToDO's Start Date: ");
-        Date startDate = Helpers.covertStringToDate(scanner.nextLine());
+        Date startDate = null;
+        try {
+            startDate = Helpers.covertStringToDate(scanner.nextLine());
+        } catch (InvalidDateFormatException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println();
 
         System.out.print("Please Enter ToDO's End Date: ");
-        Date endDate = Helpers.covertStringToDate(scanner.nextLine());
+        Date endDate = null;
+
+        try {
+            endDate = Helpers.covertStringToDate(scanner.nextLine());
+        } catch (InvalidDateFormatException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println();
 
         System.out.print("Please Enter ToDO's Priority: ");
         String priority = scanner.nextLine();
         if (InputValidator.isValidPriority(priority))
-            System.out.println(
-
-            );
+            System.out.println();
         System.out.println();
 
         System.out.print("Please Enter ToDO's Category: ");
