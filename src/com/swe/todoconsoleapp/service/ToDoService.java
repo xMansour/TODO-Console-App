@@ -15,6 +15,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ToDoService {
+    private static final int SEARCH_BY_START_DATE = 0;
+
     public ToDo findByTitle(String title) throws ToDoNotFoundException {
         List<ToDo> toDos = selectAllToDos();
 
@@ -45,7 +47,7 @@ public class ToDoService {
 
         try {
             var selectedDate = simpleDateFormat.parse(date);
-            if (mode == 0) {
+            if (mode == SEARCH_BY_START_DATE) {
                 if (toDos != null) for (var toDo : toDos) {
                     if (toDo.getStartDate() != null && toDo.getStartDate().equals(selectedDate))
                         result.add(toDo);
@@ -124,8 +126,8 @@ public class ToDoService {
         //todos.removeIf(currentToDo -> currentToDo.getTitle().equals(title));  //Collections.removeIf -> Amazing
 
         //to check if the to-do exists, remove it
-        for (ToDo currentToDo: todos){
-            if (currentToDo.getTitle().equals(title)){
+        for (ToDo currentToDo : todos) {
+            if (currentToDo.getTitle().equals(title)) {
                 todos.remove(currentToDo);
                 deleted = true;
                 break;
