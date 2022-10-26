@@ -4,28 +4,21 @@
 
 - [Overview](#overview)
     - [GIF](#GIF)
-- [Development](#my-process)
     - [Built with](#built-with)
     - [Class Diagram](#class-diagram)
 - [Features](#features)
 - [Author](#authors)
 
-## Overview
-
-### GIF
-
-![screen-gif](./src/main/resources/Deployment/Client-Single.gif)
-
-## Development
+# Overview
 
 ## Features
 
 - Create todo.
 - Update selected todo.
 - Delete selected todo.
-- Search by (title,start date, end date and priority)
-- Get top latest 5 todos
-- change todo category or priority
+- Search by (title,start date, end date and priority).
+- Get top latest 5 todos.
+- Change todo category or priority.
 
 ## Built with
 
@@ -35,7 +28,7 @@
 ![Class Diagram](./resources/ToDo%20Console%20SWE-1.jpg)
 
 
-## Authors
+# Authors
 
 * [Mohamed Eldefrawy]
 * [Mahmoud Elsayed]
