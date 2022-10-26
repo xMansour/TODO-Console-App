@@ -118,7 +118,6 @@ public class MenuPrinter {
         System.out.println();
 
         return new ToDo(title, description, startDate, endDate, Priority.valueOf(priority.toUpperCase()), Category.valueOf(category.toUpperCase()));
-
     }
 
 
