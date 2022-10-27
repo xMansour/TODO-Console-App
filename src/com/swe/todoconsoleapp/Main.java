@@ -96,7 +96,7 @@ public class Main {
                     //   String updateToDoTitle = MenuPrinter.printFindByMenu(Criteria.TITLE.name());
                     //String updateToDoCategory = MenuPrinter.printFindByMenu(Criteria.CATEGORY.name());
                     String[] updatedValue = MenuPrinter.updateCategory();
-                    if (updatedValue!=null) {
+                    if (updatedValue != null) {
                         String updateToDoTitle = updatedValue[0];
                         String updateToDoCategory = updatedValue[1];
                         toDoService.addItemToCategory(updateToDoTitle, updateToDoCategory);
@@ -109,21 +109,11 @@ public class Main {
                 break;
                 case 11: // add to favourite
                 {
-//                    String updateToDoTitle = MenuPrinter.printFindByMenu(Criteria.TITLE.name());
-                    String updateToDoTitle = MenuPrinter.addToFavourite();
-                    if (toDoService.addItemToFavourite(updateToDoTitle) > 0) {
-                        System.out.println("=========Item was added to Favourite List===========");
-
-                    }
-                    else {
-                        System.out.println("no such To Do title found");
-                    }
-
-
+                    String updateToDoTitle = MenuPrinter.printFindByMenu(Criteria.TITLE.name());
+//                    String updateToDoTitle = MenuPrinter.addToFavourite();
+                    toDoService.addItemToFavourite(updateToDoTitle);
                 }
                 break;
-
-
                 case 12: // Exit
                     System.exit(0);
                     break;

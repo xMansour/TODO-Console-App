@@ -190,15 +190,15 @@ public class ToDoService {
     }
 
 
-    public int addItemToCategory(String title , String category) {
+    public int addItemToCategory(String title, String category) {
 
 
-        ToDo toDo =null;
+        ToDo toDo = null;
         try {
             toDo = findByTitle(title);
-        Category updatedCategory = Category.valueOf(category.toUpperCase());
-        toDo.setCategory(updatedCategory);
-        updateToDo(toDo);
+            Category updatedCategory = Category.valueOf(category.toUpperCase());
+            toDo.setCategory(updatedCategory);
+            updateToDo(toDo);
         } catch (ToDoNotFoundException e) {
             e.getMessage();
 
@@ -210,22 +210,17 @@ public class ToDoService {
     }
 
 
-    public int addItemToFavourite(String title)
-    {
+    public void addItemToFavourite(String title) {
 
         try {
             ToDo toDo = findByTitle(title);
             toDo.setFavourite(true);
+            updateToDo(toDo);
+            System.out.println("Item added successfully");
         } catch (ToDoNotFoundException e) {
-            e.getMessage();
-            return -1;
+            System.out.println(e.getMessage());
         }
-        return 1;
-
-
-
     }
-
 
 
 }

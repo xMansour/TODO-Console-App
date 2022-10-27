@@ -66,7 +66,7 @@ public class MenuPrinter {
             System.out.println("category: Not assigned yet");
         }
         if (toDo.isFavourite())
-        System.out.println("favourite : YES");
+            System.out.println("favourite : YES");
 
         else {
             System.out.println("favourite : NO");
@@ -133,21 +133,20 @@ public class MenuPrinter {
         switch (answer) {
             case "yes":
             case "YES":
-                favourite=true;
+                favourite = true;
                 break;
             case "no":
             case "No":
-                favourite=false;
+                favourite = false;
                 break;
 
         }
 
-            return new ToDo(title, description, startDate, endDate, Priority.valueOf(priority.toUpperCase()), Category.valueOf(category.toUpperCase()), favourite);
-        }
+        return new ToDo(title, description, startDate, endDate, Priority.valueOf(priority.toUpperCase()), Category.valueOf(category.toUpperCase()), favourite);
+    }
 
 
-
-//    public static String updateCategory()
+    //    public static String updateCategory()
 //    {
 //        System.out.println("==========");
 //        System.out.print("Please Enter ToDO's Title you want to update Category: ");
@@ -163,15 +162,14 @@ public class MenuPrinter {
 //
 //
 //    }
-public static String[] updateCategory()
-    {
-        ToDoService toDoService= new ToDoService();
+    public static String[] updateCategory() {
+        ToDoService toDoService = new ToDoService();
         String[] updatedValue = new String[2];
         System.out.println("==========");
         System.out.print("Please Enter ToDO's Title you want to update Category: ");
 
         try {
-            String title= scanner.nextLine();
+            String title = scanner.nextLine();
             toDoService.findByTitle(title);
             System.out.println();
             System.out.print("Please Enter ToDO's  new Category from(work,hobby,routine): ");
@@ -180,27 +178,23 @@ public static String[] updateCategory()
                 System.out.println(" no such category found");
                 return null;
             }
-            updatedValue[0]=title;
-            updatedValue[1]=category;
-        return updatedValue;
+            updatedValue[0] = title;
+            updatedValue[1] = category;
+            return updatedValue;
         } catch (ToDoNotFoundException e) {
             e.getMessage();
         }
 
 
-
-return null;
+        return null;
 
     }
 
-    public static String addToFavourite()
-    {
+    public static String addToFavourite() {
         System.out.println("==========");
         System.out.print("Please Enter ToDO's Title you want to add to favourite: ");
         String title = scanner.nextLine();
         return title;
-
-
 
     }
 
