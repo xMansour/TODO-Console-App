@@ -120,9 +120,9 @@ public class MenuPrinter {
         }
         System.out.print("Please Enter ToDO's Category from(work,hobby , routine): ");
         String category = scanner.nextLine();
-        if(!InputValidator.isValidCategory(category)) {
+        if (!InputValidator.isValidCategory(category)) {
             System.out.println(" Invalid Category and Category will set as DEFAULT");
-            category=Category.DEFAULT.name();
+            category = Category.DEFAULT.name();
         }
         System.out.println();
         System.out.println("Do you want to add this ToDo item to favourite list (YES or NO )");
@@ -143,23 +143,6 @@ public class MenuPrinter {
         return new ToDo(title, description, startDate, endDate, Priority.valueOf(priority.toUpperCase()), Category.valueOf(category.toUpperCase()), favourite);
     }
 
-
-    //    public static String updateCategory()
-//    {
-//        System.out.println("==========");
-//        System.out.print("Please Enter ToDO's Title you want to update Category: ");
-//        String title = scanner.nextLine();
-//        System.out.println();
-//        System.out.print("Please Enter ToDO's  new Category from(work,hobby , routine): ");
-//        String category = scanner.nextLine();
-//
-//
-//
-//        System.out.println();
-//        return title;
-//
-//
-//    }
     public static String[] updateCategory() {
         ToDoService toDoService = new ToDoService();
         String[] updatedValue = new String[2];
@@ -174,7 +157,7 @@ public class MenuPrinter {
             String category = scanner.nextLine();
             if (!InputValidator.isValidCategory(category)) {
                 System.out.println(" Invalid Category and Category will set as DEFAULT");
-                category=Category.DEFAULT.name();
+                category = Category.DEFAULT.name();
             }
             updatedValue[0] = title;
             updatedValue[1] = category;
