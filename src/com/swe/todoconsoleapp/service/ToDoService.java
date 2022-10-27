@@ -1,5 +1,6 @@
 package com.swe.todoconsoleapp.service;
 
+import com.swe.todoconsoleapp.entity.Category;
 import com.swe.todoconsoleapp.entity.ToDo;
 import com.swe.todoconsoleapp.exception.InvalidDateFormatException;
 import com.swe.todoconsoleapp.exception.PriorityNotFoundException;
@@ -105,6 +106,8 @@ public class ToDoService {
                 currentToDo.setPriority(todo.getPriority());
                 currentToDo.setStartDate(todo.getStartDate());
                 currentToDo.setEndDate(todo.getEndDate());
+                currentToDo.setFavourite(todo.isFavourite());
+
                 updated = true;
                 break;
             }
@@ -167,19 +170,62 @@ public class ToDoService {
     public List<ToDo> selectTopFiveNearestByStartDate() {
         List<ToDo> unSortedToDos = selectAllToDos();
 
-        Collections.sort(unSortedToDos, new Comparator<ToDo>() {
-            @Override
-            public int compare(ToDo toDo1, ToDo toDo2) {
-                return (toDo1.getStartDate().compareTo(toDo2.getStartDate()));
-            }
-        });
 
-        List<ToDo> sortedToDos = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            sortedToDos.set(i, unSortedToDos.get(i));
+        if (unSortedToDos != null) {
+            {
+                Collections.sort(unSortedToDos, new Comparator<ToDo>() {
+                    @Override
+                    public int compare(ToDo toDo1, ToDo toDo2) {
+                        return (toDo1.getStartDate().compareTo(toDo2.getStartDate()));
+                    }
+                });
+            }
+            List<ToDo> sortedToDos = new ArrayList<>();
+            for (int i = 0; i < unSortedToDos.size(); i++) {
+                sortedToDos.add(i, unSortedToDos.get(i));
+            }
+            return sortedToDos;
         }
-        return sortedToDos;
+        return unSortedToDos;
     }
+
+
+    public int addItemToCategory(String title , String category) {
+
+
+        ToDo toDo =null;
+        try {
+            toDo = findByTitle(title);
+        Category updatedCategory = Category.valueOf(category.toUpperCase());
+        toDo.setCategory(updatedCategory);
+        updateToDo(toDo);
+        } catch (ToDoNotFoundException e) {
+            e.getMessage();
+
+            return -1;
+        }
+        return 1;
+
+
+    }
+
+
+    public int addItemToFavourite(String title)
+    {
+
+        try {
+            ToDo toDo = findByTitle(title);
+            toDo.setFavourite(true);
+        } catch (ToDoNotFoundException e) {
+            e.getMessage();
+            return -1;
+        }
+        return 1;
+
+
+
+    }
+
 
 
 }
