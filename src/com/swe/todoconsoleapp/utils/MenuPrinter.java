@@ -120,6 +120,10 @@ public class MenuPrinter {
         }
         System.out.print("Please Enter ToDO's Category from(work,hobby , routine): ");
         String category = scanner.nextLine();
+        if(!InputValidator.isValidCategory(category)) {
+            System.out.println(" Invalid Category and Category will set as DEFAULT");
+            category=Category.DEFAULT.name();
+        }
         System.out.println();
         System.out.println("Do you want to add this ToDo item to favourite list (YES or NO )");
         String answer = scanner.nextLine();
@@ -169,8 +173,8 @@ public class MenuPrinter {
             System.out.print("Please Enter ToDO's  new Category from(work,hobby,routine): ");
             String category = scanner.nextLine();
             if (!InputValidator.isValidCategory(category)) {
-                System.out.println(" no such category found");
-                return null;
+                System.out.println(" Invalid Category and Category will set as DEFAULT");
+                category=Category.DEFAULT.name();
             }
             updatedValue[0] = title;
             updatedValue[1] = category;
