@@ -3,9 +3,7 @@ package com.swe.todoconsoleapp.utils;
 import com.swe.todoconsoleapp.entity.Category;
 import com.swe.todoconsoleapp.entity.Priority;
 import com.swe.todoconsoleapp.entity.ToDo;
-import com.swe.todoconsoleapp.exception.InvalidDateFormatException;
 import com.swe.todoconsoleapp.exception.NoDateAssignedException;
-import com.swe.todoconsoleapp.exception.ToDoNotFoundException;
 import com.swe.todoconsoleapp.service.ToDoService;
 
 import java.util.Date;
@@ -50,7 +48,6 @@ public class MenuPrinter {
 
         } catch (NoDateAssignedException ex) {
             System.out.println("start date: " + ex.getMessage());
-
         }
         try {
             System.out.println("end date: " + Helpers.covertDateToString(toDo.getStartDate()));
@@ -100,26 +97,23 @@ public class MenuPrinter {
         System.out.println();
 
         System.out.print("Please Enter ToDO's Start Date: ");
-        Date startDate = null;
-        try {
-            startDate = Helpers.covertStringToDate(scanner.nextLine());
-        } catch (InvalidDateFormatException e) {
-            System.out.println(e.getMessage());
-        }
+
+        Date startDate = Helpers.covertStringToDate(scanner.nextLine());
+
+        if (!InputValidator.isValidStartDate(startDate))
+            System.out.println("Date must follow dd/MM/yyyy and be after today");
+
         System.out.println();
 
         System.out.print("Please Enter ToDO's End Date: ");
-        Date endDate = null;
+        Date endDate = Helpers.covertStringToDate(scanner.nextLine());
 
-        try {
-            endDate = Helpers.covertStringToDate(scanner.nextLine());
-        } catch (InvalidDateFormatException e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println();
+        if (!InputValidator.isValidEndDate(endDate, startDate))
+            System.out.println("Date must follow dd/MM/yyyy and be after start date");
+
         System.out.print("Please Enter ToDO's Priority from(HIGH, MEDIUM , LOW): ");
-
         String priority = scanner.nextLine();
+
         if (!InputValidator.isValidPriority(priority)) {
             System.out.println("Invalid priority and it will be set to LOW");
             priority = "LOW";
@@ -168,9 +162,9 @@ public class MenuPrinter {
         System.out.println("==========");
         System.out.print("Please Enter ToDO's Title you want to update Category: ");
 
-        try {
-            String title = scanner.nextLine();
-            toDoService.findByTitle(title);
+        String title = scanner.nextLine();
+        var selectedTodo = toDoService.findByTitle(title);
+        if (selectedTodo != null) {
             System.out.println();
             System.out.print("Please Enter ToDO's  new Category from(work,hobby,routine): ");
             String category = scanner.nextLine();
@@ -181,13 +175,8 @@ public class MenuPrinter {
             updatedValue[0] = title;
             updatedValue[1] = category;
             return updatedValue;
-        } catch (ToDoNotFoundException e) {
-            e.getMessage();
         }
-
-
         return null;
-
     }
 
     public static String addToFavourite() {
@@ -195,8 +184,5 @@ public class MenuPrinter {
         System.out.print("Please Enter ToDO's Title you want to add to favourite: ");
         String title = scanner.nextLine();
         return title;
-
     }
-
-
 }

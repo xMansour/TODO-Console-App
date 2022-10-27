@@ -2,9 +2,6 @@ package com.swe.todoconsoleapp.service;
 
 import com.swe.todoconsoleapp.entity.Category;
 import com.swe.todoconsoleapp.entity.ToDo;
-import com.swe.todoconsoleapp.exception.InvalidDateFormatException;
-import com.swe.todoconsoleapp.exception.PriorityNotFoundException;
-import com.swe.todoconsoleapp.exception.ToDoNotFoundException;
 import com.swe.todoconsoleapp.utils.Helpers;
 import com.swe.todoconsoleapp.utils.InputValidator;
 
@@ -17,21 +14,22 @@ import java.util.List;
 public class ToDoService {
     private static final int SEARCH_BY_START_DATE = 0;
 
-    public ToDo findByTitle(String title) throws ToDoNotFoundException {
+    public ToDo findByTitle(String title) {
         List<ToDo> toDos = selectAllToDos();
+        ToDo selectedTodo = null;
 
         if (toDos != null)
             for (var item : toDos) {
-                if (item.getTitle().equals(title)) return item;
+                if (item.getTitle().equals(title)) selectedTodo = item;
             }
-        throw new ToDoNotFoundException("No ToDo found with the selected title: " + title);
+        return selectedTodo;
     }
 
-    public List<ToDo> findByPriority(String priority) throws PriorityNotFoundException {
+    public List<ToDo> findByPriority(String priority) {
         List<ToDo> toDos = selectAllToDos();
         List<ToDo> result = new ArrayList<>();
-        if (!InputValidator.isValidPriority(priority))
-            throw new PriorityNotFoundException("Invalid Priority please select from(High,Medium,Low)");
+        if (InputValidator.isValidPriority(priority))
+            return null;
 
         if (toDos != null) for (var toDo : toDos) {
             if (toDo.getCategory() != null && toDo.getPriority().name().equals(priority)) result.add(toDo);
@@ -39,7 +37,7 @@ public class ToDoService {
         return result;
     }
 
-    public List<ToDo> findByDate(int mode, String date) throws InvalidDateFormatException {
+    public List<ToDo> findByDate(int mode, String date) {
         var toDos = selectAllToDos();
         var result = new ArrayList<ToDo>();
 
@@ -190,37 +188,26 @@ public class ToDoService {
     }
 
 
-    public int addItemToCategory(String title, String category) {
+    public boolean addItemToCategory(String title, String category) {
 
-
-        ToDo toDo = null;
-        try {
-            toDo = findByTitle(title);
+        var toDo = findByTitle(title);
+        if (toDo != null) {
             Category updatedCategory = Category.valueOf(category.toUpperCase());
             toDo.setCategory(updatedCategory);
             updateToDo(toDo);
-        } catch (ToDoNotFoundException e) {
-            e.getMessage();
-
-            return -1;
+            return true;
         }
-        return 1;
-
-
+        return false;
     }
 
 
-    public void addItemToFavourite(String title) {
-
-        try {
-            ToDo toDo = findByTitle(title);
+    public boolean addItemToFavourite(String title) {
+        ToDo toDo = findByTitle(title);
+        if (toDo != null) {
             toDo.setFavourite(true);
             updateToDo(toDo);
-            System.out.println("Item added successfully");
-        } catch (ToDoNotFoundException e) {
-            System.out.println(e.getMessage());
+            return true;
         }
+        return false;
     }
-
-
 }
