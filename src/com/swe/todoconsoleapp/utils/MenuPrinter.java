@@ -117,13 +117,13 @@ public class MenuPrinter {
             System.out.println(e.getMessage());
         }
         System.out.println();
+        System.out.print("Please Enter ToDO's Priority from(HIGH, MEDIUM , LOW): ");
 
-        System.out.print("Please Enter ToDO's Priority from(HIGH, MEDUIM , LOW): ");
         String priority = scanner.nextLine();
-        if (InputValidator.isValidPriority(priority))
-            System.out.println();
-        System.out.println();
-
+        if (!InputValidator.isValidPriority(priority)) {
+            System.out.println("Invalid priority and it will be set to LOW");
+            priority = "LOW";
+        }
         System.out.print("Please Enter ToDO's Category from(work,hobby , routine): ");
         String category = scanner.nextLine();
         System.out.println();
