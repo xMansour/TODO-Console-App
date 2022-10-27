@@ -12,13 +12,17 @@ public class ToDo implements Serializable {
     private Priority priority;
     private Category category;
 
-    public ToDo(String title, String description, Date startDate, Date endDate, Priority priority, Category category) {
+
+    private boolean favourite;
+
+    public ToDo(String title, String description, Date startDate, Date endDate, Priority priority, Category category , boolean favourite) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.priority = priority;
         this.category = category;
+        this.favourite= favourite;
     }
 
 
@@ -71,5 +75,12 @@ public class ToDo implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
     }
 }
