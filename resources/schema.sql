@@ -16,6 +16,7 @@ create table if not exists categories
     name varchar(50)
 );
 
+
 create table if not exists items
 (
     id int primary key auto_increment,

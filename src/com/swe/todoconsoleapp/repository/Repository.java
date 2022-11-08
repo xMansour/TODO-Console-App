@@ -3,7 +3,7 @@ package com.swe.todoconsoleapp.repository;
 import java.util.List;
 
 public interface Repository<T> {
-    T create(T entity);
+    boolean create(T entity);
 
     T update(T entity);
 

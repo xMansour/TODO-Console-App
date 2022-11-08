@@ -1,14 +1,20 @@
 package com.swe.todoconsoleapp.service;
 
-import com.swe.todoconsoleapp.entity.enums.Category;
+import com.swe.todoconsoleapp.data.DbContext;
 import com.swe.todoconsoleapp.entity.ToDo;
+import com.swe.todoconsoleapp.entity.enums.Category;
+import com.swe.todoconsoleapp.repository.ToDoRepository;
 import com.swe.todoconsoleapp.utils.Helpers;
 import com.swe.todoconsoleapp.utils.InputValidator;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
 
-public class ToDoService {
+public class ToDoService implements ToDoRepository {
+
     private static final int SEARCH_BY_START_DATE = 0;
 
     public ToDo findByTitle(String title) {
@@ -206,5 +212,47 @@ public class ToDoService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean create(ToDo entity) {
+        String query = "insert into items(title,description,start_date,end_date,category_id,priority_id) " +
+                "values (?,?,?,?,?,?)";
+        int rowsAffected = 0;
+        try (Connection connection = DbContext.openDbConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, entity.getTitle());
+            preparedStatement.setString(2, entity.getDescription());
+            preparedStatement.setObject(3, entity.getStartDate());
+            preparedStatement.setObject(4, entity.getEndDate());
+            preparedStatement.setInt(5, entity.getCategory().getId());
+            preparedStatement.setInt(6, entity.getPriority().getId());
+            preparedStatement.addBatch();
+            rowsAffected = preparedStatement.executeBatch().length;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return rowsAffected > 0;
+    }
+
+    @Override
+    public ToDo update(ToDo entity) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return false;
+    }
+
+    @Override
+    public List<ToDo> get() {
+        return null;
+    }
+
+    @Override
+    public ToDo getById(Integer id) {
+        return null;
     }
 }

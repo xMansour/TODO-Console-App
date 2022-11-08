@@ -56,8 +56,8 @@ public class MenuPrinter {
         }
 
         if (toDo.getCategory() != null) {
-            System.out.println("priority: " + toDo.getPriority().name());
-            System.out.println("category: " + toDo.getCategory().name());
+            System.out.println("priority: " + toDo.getPriority().getName());
+            System.out.println("category: " + toDo.getCategory().getName());
         } else {
             System.out.println("priority: Not assigned yet");
             System.out.println("category: Not assigned yet");
@@ -117,12 +117,14 @@ public class MenuPrinter {
         if (!InputValidator.isValidPriority(priority)) {
             System.out.println("Invalid priority and it will be set to LOW");
             priority = "LOW";
+            // get low priority from PriorityService
         }
         System.out.print("Please Enter ToDO's Category from(work,hobby , routine): ");
         String category = scanner.nextLine();
         if (!InputValidator.isValidCategory(category)) {
             System.out.println(" Invalid Category and Category will set as DEFAULT");
             category = Category.DEFAULT.name();
+            // get default caategory from CategoryService
         }
         System.out.println();
         System.out.println("Do you want to add this ToDo item to favourite list (YES or NO )");
@@ -140,7 +142,8 @@ public class MenuPrinter {
 
         }
 
-        return new ToDo(title, description, startDate, endDate, Priority.valueOf(priority.toUpperCase()), Category.valueOf(category.toUpperCase()), favourite);
+        // set priority and category objects instead of null
+        return new ToDo(title, description, startDate, endDate, null, null, favourite);
     }
 
     public static String[] updateCategory() {

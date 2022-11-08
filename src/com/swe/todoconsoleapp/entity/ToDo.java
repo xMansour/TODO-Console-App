@@ -1,12 +1,8 @@
 package com.swe.todoconsoleapp.entity;
 
-import com.swe.todoconsoleapp.entity.enums.Category;
-import com.swe.todoconsoleapp.entity.enums.Priority;
-
-import java.io.Serializable;
 import java.util.Date;
 
-public class ToDo implements Serializable {
+public class ToDo {
     private String title;
     private String description;
     private Date startDate;
@@ -18,14 +14,14 @@ public class ToDo implements Serializable {
 
     private boolean favourite;
 
-    public ToDo(String title, String description, Date startDate, Date endDate, Priority priority, Category category , boolean favourite) {
+    public ToDo(String title, String description, Date startDate, Date endDate, Priority priority, Category category, boolean favourite) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.priority = priority;
         this.category = category;
-        this.favourite= favourite;
+        this.favourite = favourite;
     }
 
 
@@ -79,6 +75,7 @@ public class ToDo implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
     public boolean isFavourite() {
         return favourite;
     }
