@@ -75,7 +75,7 @@ public class MenuPrinter {
     public static void printResults(List<ToDo> toDos) {
 
         if (toDos == null || toDos.size() == 0) System.out.println("No toDos found");
-        else for (var toDo : toDos) {
+        else for (ToDo toDo : toDos) {
             printResults(toDo);
         }
     }
@@ -150,7 +150,7 @@ public class MenuPrinter {
         System.out.print("Please Enter ToDO's Title you want to update Category: ");
 
         String title = scanner.nextLine();
-        var selectedTodo = toDoService.findByTitle(title);
+        ToDo selectedTodo = toDoService.findByTitle(title);
         if (selectedTodo != null) {
             System.out.println();
             System.out.print("Please Enter ToDO's  new Category from(work,hobby,routine): ");

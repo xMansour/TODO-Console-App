@@ -6,10 +6,7 @@ import com.swe.todoconsoleapp.utils.Helpers;
 import com.swe.todoconsoleapp.utils.InputValidator;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class ToDoService {
     private static final int SEARCH_BY_START_DATE = 0;
@@ -19,7 +16,7 @@ public class ToDoService {
         ToDo selectedTodo = null;
 
         if (toDos != null)
-            for (var item : toDos) {
+            for (ToDo item : toDos) {
                 if (item.getTitle().equals(title)) selectedTodo = item;
             }
         return selectedTodo;
@@ -31,24 +28,24 @@ public class ToDoService {
         if (InputValidator.isValidPriority(priority))
             return null;
 
-        if (toDos != null) for (var toDo : toDos) {
+        if (toDos != null) for (ToDo toDo : toDos) {
             if (toDo.getCategory() != null && toDo.getPriority().name().equals(priority)) result.add(toDo);
         }
         return result;
     }
 
     public List<ToDo> findByDate(int mode, String date) {
-        var toDos = selectAllToDos();
-        var result = new ArrayList<ToDo>();
+        List<ToDo> toDos = selectAllToDos();
+        List<ToDo> result = new ArrayList<ToDo>();
 
-        var selectedDate = Helpers.covertStringToDate(date);
+        Date selectedDate = Helpers.covertStringToDate(date);
         if (mode == SEARCH_BY_START_DATE) {
-            if (toDos != null) for (var toDo : toDos) {
+            if (toDos != null) for (ToDo toDo : toDos) {
                 if (toDo.getStartDate() != null && toDo.getStartDate().equals(selectedDate))
                     result.add(toDo);
             }
         } else {
-            if (toDos != null) for (var toDo : toDos) {
+            if (toDos != null) for (ToDo toDo : toDos) {
                 if (toDo.getEndDate() != null && toDo.getEndDate().equals(selectedDate))
                     result.add(toDo);
             }
@@ -190,7 +187,7 @@ public class ToDoService {
 
     public boolean addItemToCategory(String title, String category) {
 
-        var toDo = findByTitle(title);
+        ToDo toDo = findByTitle(title);
         if (toDo != null) {
             Category updatedCategory = Category.valueOf(category.toUpperCase());
             toDo.setCategory(updatedCategory);

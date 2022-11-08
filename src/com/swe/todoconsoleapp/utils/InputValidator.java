@@ -8,7 +8,7 @@ import java.util.Date;
 public class InputValidator {
     public static boolean isValidNumber(String input, int start, int end) {
         try {
-            var number = Integer.parseInt(input);
+            Integer number = Integer.parseInt(input);
             return number >= start && number <= end;
         } catch (NumberFormatException e) {
             return false;
