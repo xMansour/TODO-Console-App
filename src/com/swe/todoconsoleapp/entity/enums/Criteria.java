@@ -1,4 +1,4 @@
-package com.swe.todoconsoleapp.entity;
+package com.swe.todoconsoleapp.entity.enums;
 
 public enum Criteria {
     TITLE,

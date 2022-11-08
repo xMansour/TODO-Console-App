@@ -1,6 +1,6 @@
 package com.swe.todoconsoleapp;
 
-import com.swe.todoconsoleapp.entity.Criteria;
+import com.swe.todoconsoleapp.entity.enums.Criteria;
 import com.swe.todoconsoleapp.entity.ToDo;
 import com.swe.todoconsoleapp.service.ToDoService;
 import com.swe.todoconsoleapp.utils.InputValidator;
@@ -78,9 +78,6 @@ public class Main {
                         MenuPrinter.resetMenu();
                     }
                     break;
-// update category
-//   String updateToDoTitle = MenuPrinter.printFindByMenu(Criteria.TITLE.name());
-//String updateToDoCategory = MenuPrinter.printFindByMenu(Criteria.CATEGORY.name());
                 case 10:
                     String[] updatedValue = MenuPrinter.updateCategory();
                     if (updatedValue != null) {

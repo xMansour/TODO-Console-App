@@ -2,33 +2,23 @@ package com.swe.todoconsoleapp.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
+
+import static config.DatabaseConfigurations.*;
 
 public class DbContext {
-    public static void openDbConnection() {
+    public static Connection openDbConnection() {
+        Connection con;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/classicmodels", "root", "1234");
-
-            //here sonoo is the database name, root is the username and root is the password
-            Statement stmt = con.createStatement();
-
-
-            ResultSet rs = stmt.executeQuery("select * from employees");
-
-
-            while (rs.next())
-                System.out.println(rs.getInt(1) + "  " + rs.getString(2));
-
-            con.close();
-        } catch (
-                Exception e) {
-            System.out.println(e);
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        openDbConnection();
+        try {
+            con = DriverManager.getConnection(CONNECTION_STRING, USER_NAME, PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return con;
     }
 }
