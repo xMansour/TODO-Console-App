@@ -1,6 +1,6 @@
 package com.swe.todoconsoleapp.service;
 
-import com.swe.todoconsoleapp.entity.Category;
+import com.swe.todoconsoleapp.entity.enums.Category;
 import com.swe.todoconsoleapp.entity.ToDo;
 import com.swe.todoconsoleapp.utils.Helpers;
 import com.swe.todoconsoleapp.utils.InputValidator;

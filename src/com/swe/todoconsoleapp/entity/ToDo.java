@@ -1,5 +1,8 @@
 package com.swe.todoconsoleapp.entity;
 
+import com.swe.todoconsoleapp.entity.enums.Category;
+import com.swe.todoconsoleapp.entity.enums.Priority;
+
 import java.io.Serializable;
 import java.util.Date;
 

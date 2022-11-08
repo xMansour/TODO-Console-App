@@ -1,7 +1,7 @@
 package com.swe.todoconsoleapp.utils;
 
-import com.swe.todoconsoleapp.entity.Category;
-import com.swe.todoconsoleapp.entity.Priority;
+import com.swe.todoconsoleapp.entity.enums.Category;
+import com.swe.todoconsoleapp.entity.enums.Priority;
 
 import java.util.Date;
 
