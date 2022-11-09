@@ -1,9 +1,11 @@
 package com.swe.todoconsoleapp.utils;
 
-import com.swe.todoconsoleapp.entity.enums.Category;
-import com.swe.todoconsoleapp.entity.enums.Priority;
+import com.swe.todoconsoleapp.entity.Category;
+import com.swe.todoconsoleapp.entity.Priority;
 import com.swe.todoconsoleapp.entity.ToDo;
 import com.swe.todoconsoleapp.exception.NoDateAssignedException;
+import com.swe.todoconsoleapp.service.CategoryService;
+import com.swe.todoconsoleapp.service.PriorityService;
 import com.swe.todoconsoleapp.service.ToDoService;
 
 import java.util.Date;
@@ -13,6 +15,8 @@ import java.util.Scanner;
 public class MenuPrinter {
 
     private static final Scanner scanner = new Scanner(System.in);
+    private static final PriorityService priorityService = new PriorityService();
+    private static final CategoryService categoryService = new CategoryService();
 
     public static Integer printMainMenu() {
         String input = "";
@@ -112,19 +116,18 @@ public class MenuPrinter {
             System.out.println("Date must follow dd/MM/yyyy and be after start date");
 
         System.out.print("Please Enter ToDO's Priority from(HIGH, MEDIUM , LOW): ");
-        String priority = scanner.nextLine();
-
-        if (!InputValidator.isValidPriority(priority)) {
+        String priorityName = scanner.nextLine();
+        Priority selectedPriority = priorityService.findPriorityByName(priorityName.toUpperCase());
+        if (selectedPriority == null) {
             System.out.println("Invalid priority and it will be set to LOW");
-            priority = "LOW";
-            // get low priority from PriorityService
+            selectedPriority = priorityService.findPriorityByName("LOW");
         }
         System.out.print("Please Enter ToDO's Category from(work,hobby , routine): ");
-        String category = scanner.nextLine();
-        if (!InputValidator.isValidCategory(category)) {
+        String categoryName = scanner.nextLine();
+        Category selectedCategory = categoryService.findCategoryByName(categoryName.toUpperCase());
+        if (selectedCategory == null) {
             System.out.println(" Invalid Category and Category will set as DEFAULT");
-            category = Category.DEFAULT.name();
-            // get default caategory from CategoryService
+            selectedCategory = categoryService.findCategoryByName("DEFAULT");
         }
         System.out.println();
         System.out.println("Do you want to add this ToDo item to favourite list (YES or NO )");
@@ -143,7 +146,7 @@ public class MenuPrinter {
         }
 
         // set priority and category objects instead of null
-        return new ToDo(title, description, startDate, endDate, null, null, favourite);
+        return new ToDo(title, description, startDate, endDate, selectedPriority, selectedCategory, favourite);
     }
 
     public static String[] updateCategory() {
@@ -158,9 +161,10 @@ public class MenuPrinter {
             System.out.println();
             System.out.print("Please Enter ToDO's  new Category from(work,hobby,routine): ");
             String category = scanner.nextLine();
-            if (!InputValidator.isValidCategory(category)) {
+            Category selectedCategory = categoryService.findCategoryByName(category.toUpperCase());
+            if (selectedCategory == null) {
                 System.out.println(" Invalid Category and Category will set as DEFAULT");
-                category = Category.DEFAULT.name();
+                selectedCategory = categoryService.findCategoryByName("DEFAULT");
             }
             updatedValue[0] = title;
             updatedValue[1] = category;

@@ -5,7 +5,7 @@ import java.util.List;
 public interface Repository<T> {
     boolean create(T entity);
 
-    T update(T entity);
+    boolean update(T entity);
 
     boolean delete(Integer id);
 

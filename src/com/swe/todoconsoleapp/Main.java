@@ -18,20 +18,20 @@ public class Main {
             switch (result) {
                 case 1:
                     ToDo todo = MenuPrinter.createToDoMenu();
-                    toDoService.createToDo(todo);
+                    toDoService.create(todo);
                     MenuPrinter.resetMenu();
                     break;
                 case 2:
                     ToDo toDo = MenuPrinter.createToDoMenu();
-                    toDoService.updateToDo(toDo);
+                    toDoService.update(toDo);
                     break;
                 case 3:
                     String deletedToDoTitle = MenuPrinter.printFindByMenu(Criteria.TITLE.name());
-                    toDoService.deleteToDo(deletedToDoTitle);
+                    toDoService.deleteByTitle(deletedToDoTitle);
                     MenuPrinter.resetMenu();
                     break;
                 case 4:
-                    MenuPrinter.printResults(toDoService.selectAllToDos());
+                    MenuPrinter.printResults(toDoService.get());
                     break;
                 case 5:
                     MenuPrinter.printResults(toDoService.selectTopFiveNearestByStartDate());

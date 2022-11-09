@@ -3,6 +3,7 @@ package com.swe.todoconsoleapp.entity;
 import java.util.Date;
 
 public class ToDo {
+    private Integer id;
     private String title;
     private String description;
     private Date startDate;
@@ -82,5 +83,13 @@ public class ToDo {
 
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
